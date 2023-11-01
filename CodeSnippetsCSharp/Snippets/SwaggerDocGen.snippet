@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>AddSwaggerGen Template</Title>
+            <Author>Marc Alfaro</Author>
+            <Description>Inserts a code snippet for AddSwaggerGen(), usually used for ASP.Net Core Web API projects to enable using comments for Swagger descriptions.</Description>      
+            <Shortcut>swagdoc</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = Assembly.GetExecutingAssembly().GetName().Name,
+            Version = "v1",
+            Description = "Desc",
+            Contact = new OpenApiContact() { Name="Marc", Email="marc@***.com" }             
+        }
+     );
+
+    //Enable Properties > Build > Output > Documentation File
+    //var filePath = Path.Combine(System.AppContext.BaseDirectory, "MyApi.xml");
+
+    var fileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
+    var filePath = Path.Combine(System.AppContext.BaseDirectory, fileName);
+    c.IncludeXmlComments(filePath);
+});
+
+app.UseSwaggerUI(c => { c.DocumentTitle = $"Swagger UI :: {Assembly.GetExecutingAssembly().GetName().Name}"; });
+
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
