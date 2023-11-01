@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>(Extension) Splits an enumerable into chunks</Title>
+            <Author>Selim YILDIZ (@selimyildiz91)</Author>
+            <Description>The Chunk extension method allows you to divide a sequence into smaller chunks of a specified size</Description>      
+            <Shortcut>chunk</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[ 
+// Source: https://medium.com/@selimyildiz91/useful-linq-extension-method-1-chunk-9c6920e6133f
+
+public static IEnumerable<T[]> Chunk<T>(this IEnumerable<T> source, int chunkSize)
+{
+    if (chunkSize <= 0)
+    {
+        throw new ArgumentException("Chunk size must be greater than zero.", nameof(chunkSize));
+    }
+
+    T[] currentChunk = new T[chunkSize];
+    int currentIndex = 0;
+
+    foreach (T item in source)
+    {
+        currentChunk[currentIndex++] = item;
+
+        if (currentIndex == chunkSize)
+        {
+            yield return currentChunk;
+            currentChunk = new T[chunkSize];
+            currentIndex = 0;
+        }
+    }
+
+    if (currentIndex > 0)
+    {
+        Array.Resize(ref currentChunk, currentIndex);
+        yield return currentChunk;
+    }
+}                
+                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
