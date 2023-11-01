@@ -50,6 +50,7 @@
     <None Include="App.config" />
     <None Include="Snippets\API_CRUD.snippet" />
     <None Include="Snippets\Console_ReadLine.snippet" />
+    <None Include="Snippets\Levenshtein.snippet" />
     <None Include="Snippets\LinkedCTS.snippet" />
   </ItemGroup>
   <ItemGroup>
