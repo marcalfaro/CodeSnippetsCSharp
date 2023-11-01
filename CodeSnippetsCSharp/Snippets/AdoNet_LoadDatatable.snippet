@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title></Title>
+            <Author></Author>
+            <Description>ADO.Net code snippet to load data to a datatable</Description>      
+            <Shortcut>adodt</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[
+                
+        private static string GetConnString()
+        {
+            string DataSource = "YourDataSource.com,58194";
+            string InitialCatalog = "YourDatabase";
+            string Uid = "sa";
+            string Pwd = "";
+
+            return $"Data Source={DataSource};Initial Catalog={InitialCatalog};User ID={Uid};Password={Pwd};MultipleActiveResultSets=True;Connection Timeout=1000";
+        }
+
+        public static async Task<DataTable> LoadDatatableAsync(CancellationToken ct,string sqlQuery,List<SqlParameter>sqlParams = null)
+        {
+            DataTable ret = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GetConnString()))
+                {
+                    await conn.OpenAsync(ct);
+
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = sqlQuery;
+                        cmd.Connection = conn;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = 180;
+
+                        if (sqlParams != null && sqlParams.Count > 0)
+                        {
+                            foreach (SqlParameter param in sqlParams)
+                            {
+                                cmd.Parameters.AddWithValue(param.ParameterName, param.Value);
+                            }
+                        }
+
+                        using (SqlDataReader sReader = await cmd.ExecuteReaderAsync(ct))
+                        {
+                            if (!ct.IsCancellationRequested && sReader.HasRows)
+                            {
+                                ret= new DataTable();
+                                await Task.Run(() => ret.Load(sReader));
+                            }
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"ERROR: {ex.Message}");
+                throw;
+            }
+
+            return ret;
+        }
+                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

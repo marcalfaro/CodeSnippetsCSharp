@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Snippets\AdoNet_LoadDatatable.snippet" />
     <None Include="Snippets\API_CRUD.snippet" />
     <None Include="Snippets\Blank.snippet" />
     <None Include="Snippets\Console_ReadLine.snippet" />
