@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>(Extension Method) The IsEmpty extension method</Title>
+            <Author>Selim YILDIZ (@selimyildiz91)</Author>
+            <Description>This method allows checks if a collection is empty or null.</Description>      
+            <Shortcut>isempty</Shortcut>   
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[ 
+// Source: https://medium.com/@selimyildiz91/useful-linq-extension-method-3-isempty-460b494e85b1
+
+public static bool IsEmpty<T>(this IEnumerable<T> source)
+{
+    if (source == null)
+        return true;
+
+    return !source.Any();
+}                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>(Extension) Partition a sequence</Title>
+            <Author>Selim YILDIZ (@selimyildiz91)</Author>
+            <Description>A convenient way to partition a sequence based on specific conditions or criteria, allowing you to process data in a more organized and segmented manner</Description>      
+            <Shortcut>part</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[ 
+// Source: https://medium.com/@selimyildiz91/useful-linq-extension-method-5-split-c3a149993666
+
+public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+{
+    List<T> currentGroup = new List<T>();
+
+    foreach (var item in source)
+    {
+        if (predicate(item) && currentGroup.Any())
+        {
+            yield return currentGroup;
+            currentGroup = new List<T>();
+        }
+
+        currentGroup.Add(item);
+    }
+
+    if (currentGroup.Any())
+    {
+        yield return currentGroup;
+    }
+}                
+                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
