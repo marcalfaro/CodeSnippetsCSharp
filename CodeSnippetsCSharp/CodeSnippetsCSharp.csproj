@@ -52,5 +52,10 @@
     <None Include="Snippets\Console_ReadLine.snippet" />
     <None Include="Snippets\LinkedCTS.snippet" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\apiCRUD.gif" />
+    <Content Include="images\cw.png" />
+    <Content Include="images\DRY.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
