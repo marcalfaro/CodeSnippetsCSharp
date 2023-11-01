@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Linked Auto-Cancelling Token Source</Title>
+            <Author>Marc Alfaro</Author>
+            <Description>Linked Auto-cancelling Token Source by Marc</Description>      
+            <Shortcut>lcts</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[
+        // Create an Auto-CancellationTokenSource with a 5-minute timeout
+        using (var ctsAutoCancel = new CancellationTokenSource(TimeSpan.FromMinutes(5)))
+            {
+                // Link the auto-CTS Token with the calling CT
+                using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, ctsAutoCancel.Token))
+                {
+                    // Assuming 'oAdo' is an instance of your data access class
+                    dt = await oAdo.LoadDataTableAsync(linkedCts.Token, sqlCon, sql, sqlParams);
+                }
+            }                                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>My API CRUD Verbs</Title>
+            <Author>Marc Alfaro</Author>
+            <Description>Creates my usual API Verbs and Methods</Description>      
+            <Shortcut>apicrud</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(CancellationToken ct,
+            [FromHeader][Required] string apiKey,
+            [FromHeader][Required] int id,
+            [FromHeader] string? userEmail = "")
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(apiKey)) return Unauthorized();
+
+                return Ok("OK");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(CancellationToken ct, int id,
+            [FromHeader][Required] string apiKey,
+            [FromHeader] string? userEmail = "")
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(apiKey)) return Unauthorized();
+
+                return Ok("OK");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(int))]
+        public async Task<IActionResult> Post(CancellationToken ct,
+             [FromHeader][Required] string apiKey,
+             [FromBody] string email,
+             [FromHeader] bool? sendMail = false)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(apiKey)) return Unauthorized();
+
+                int newId = 0;
+                return StatusCode(StatusCodes.Status201Created, newId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Put(CancellationToken ct, int id,
+             [FromHeader][Required] string apiKey,
+             [FromBody] string email,
+             [FromHeader] bool? sendMail = false)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(apiKey)) return Unauthorized();
+
+                //Check if this record exists
+                bool found = false;
+                if (!found) return StatusCode(StatusCodes.Status404NotFound);
+
+                //Update this record
+                bool ok=true;
+                if (ok) return Ok();
+                
+                return BadRequest("Failed to update.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(CancellationToken ct, int id,
+            [FromHeader][Required] string apiKey,
+            [FromBody] string email)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(apiKey)) return Unauthorized();
+
+                bool ok = false;
+                if (ok) return Ok();
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }                                
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
