@@ -58,6 +58,7 @@
     <None Include="Snippets\LinkedCTS.snippet" />
     <None Include="Snippets\Split_Enumerable.snippet" />
     <None Include="Snippets\SwaggerDocGen.snippet" />
+    <None Include="Snippets\TaskList.snippet" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\apiCRUD.gif" />
