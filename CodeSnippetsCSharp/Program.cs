@@ -10,7 +10,7 @@ namespace CodeSnippetsCSharp
     {
         static void Main(string[] args)
         {
-           
+         
         }
     }
 }
