@@ -53,6 +53,7 @@
     <None Include="Snippets\Blank.snippet" />
     <None Include="Snippets\Chunking.snippet" />
     <None Include="Snippets\Console_ReadLine.snippet" />
+    <None Include="Snippets\HttpClient.snippet" />
     <None Include="Snippets\IsEmpty.snippet" />
     <None Include="Snippets\IsPresent.snippet" />
     <None Include="Snippets\Levenshtein.snippet" />
