@@ -54,6 +54,7 @@
     <None Include="Snippets\Chunking.snippet" />
     <None Include="Snippets\Console_ReadLine.snippet" />
     <None Include="Snippets\IsEmpty.snippet" />
+    <None Include="Snippets\IsPresent.snippet" />
     <None Include="Snippets\Levenshtein.snippet" />
     <None Include="Snippets\LinkedCTS.snippet" />
     <None Include="Snippets\Split_Enumerable.snippet" />
