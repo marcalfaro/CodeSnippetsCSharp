@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>(Extension Method) Drag Form</Title>
+            <Author>Marc</Author>
+            <Description>Allows form to be dragged on MouseDown</Description>      
+            <Shortcut>_dbuff</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[  
+    public static class FormDrag
+    {
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        public static void MouseDownDragForm(object sender, MouseEventArgs e, Form f)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(f.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+        }
+
+        
+    }
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
