@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>TaskList2</Title>
+            <Author>Marc Alfaro</Author>
+            <Description>Simple snippet to handle multiple tasks in parallel</Description>      
+            <Shortcut>_taskl2</Shortcut>      
+        </Header>
+        <Snippet>
+            <Code Language="CSharp">
+                <![CDATA[                 
+    static async Task<List<int>> ProcessDataAsync(DataTable dataTable, int batchSize)
+    {
+        var totalRows = dataTable.Rows.Count;
+        var tasks = new List<Task<int>>();
+
+        for (int i = 0; i < totalRows; i += batchSize)
+        {
+            var batch = new List<DataRow>();
+
+            // Collect a batch of rows
+            for (int j = i; j < i + batchSize && j < totalRows; j++)
+            {
+                batch.Add(dataTable.Rows[j]);
+            }
+
+            // Spawn tasks for the current batch
+            tasks.AddRange(batch.Select(row => ProcessRowAsync(row)));
+
+            // Ensure only 50 tasks are running concurrently
+            if (tasks.Count >= batchSize)
+            {
+                await Task.WhenAny(tasks);
+                tasks.RemoveAll(t => t.IsCompleted);
+            }
+        }
+
+        // Wait for any remaining tasks to complete
+        await Task.WhenAll(tasks);
+
+        // Collect the results from all tasks
+        var results = tasks.Select(t => t.Result).ToList();
+        return results;
+    }
+
+    static async Task<int> ProcessRowAsync(DataRow row)
+    {
+        // Simulate processing the row
+        await Task.Delay(100);
+
+        // Return EmployeeId
+        var employeeId = (int)row["EmployeeId"];
+        return employeeId;
+    }
+                ]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
